@@ -1,0 +1,17 @@
+#!/usr/bin/env python3
+import pandas as pd
+
+model=['ERGOM']
+site=['BATS']
+
+##LIST_PERIOD=' JAN JUN' 
+##LIST_OBSERVABLE=' OC ARGO_CHL ARGO_NO3 ARGO_O2 ARGO_DIC ARGO_PO4 ARGO_POC '
+LIST_PERIOD=['JAN', 'JUN']
+LIST_OBSERVABLE=['OC', 'ARGO_CHL', 'ARGO_NO3', 'ARGO_O2', 'ARGO_DIC', 'ARGO_PO4', 'ARGO_POC']
+for period in LIST_PERIOD:
+  for obs in LIST_OBSERVABLE:
+     filein=+ model+'_' + site+'_' + period+ '_' + obs+ '_Observability'
+     df = pd.read_table(filein'.txt', sep='\t') 
+     df.to_excel(filein'.xlsx', 'Sheet1', index=False)
+  print('*.xlsx created')
+print('Out of loop')  

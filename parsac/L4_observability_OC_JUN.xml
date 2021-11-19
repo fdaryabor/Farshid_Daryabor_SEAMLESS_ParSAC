@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../client/config.xsd">
+  <transports>
+    <transport type="sqlite" path="ERGOM_L4_JUN.db"/>
+  </transports>
+  <executable path="gotm" shell="True"/>
+  <setup path="../setups/ERGOM_L4_JUN" exclude_files="" exclude_dirs=""/>
+  <parameters>
+    <parameter name="scaleprof" minimum=".5" maximum="1.5" />
+  </parameters>
+  <functions>
+    <function class="parsac.job.gotm.ChangeRestart" variable="msi_ergom1_pp" expression="variable*scaleprof" maxdepth="5"/>
+    <function class="parsac.job.gotm.ChangeRestart" variable="msi_ergom1_ff" expression="variable*scaleprof" maxdepth="5"/>
+    <function class="parsac.job.gotm.ChangeRestart" variable="msi_ergom1_bb" expression="variable*scaleprof" maxdepth="5"/>
+  </functions>
+  <targets>
+	  <target name="non-living_particulate_organic_carbon" expression="(((msi_ergom1_dd)*h)[:,:].sum(axis=1)/h[:,:].sum(axis=1)).mean(axis=0)" path="result.nc"/>
+
+    <target name="trophic_efficiency" expression="((msi_ergom1_zz)*h)[:,:].sum(axis=1).mean(axis=0)/((msi_ergom1_pp+msi_ergom1_ff+msi_ergom1_bb)*h)[:,:].sum(axis=1).mean(axis=0)" path="result.nc"/>
+
+    <target name="net_primary_production" expression="((msi_ergom1_NPR)*h)[:,:].sum(axis=1).mean(axis=0)" path="result.nc"/>
+
+    <target name="pH" expression="(((O3_pH)*h)[:,:].sum(axis=1)/h[:,:].sum(axis=1)).mean(axis=0)" path="result.nc"/>
+
+    <target name="O2" expression="(((msi_ergom1_o2)*h)[:,:3].sum(axis=1)/h[:,:3].sum(axis=1)).mean(axis=0)" path="result.nc"/>
+
+    <target name="large_over_all_phytoplankton" expression="((msi_ergom1_pp)*h)[:,:].sum(axis=1).mean(axis=0)/((msi_ergom1_pp+msi_ergom1_ff+msi_ergom1_bb)*h)[:,:].sum(axis=1).mean(axis=0)" path="result.nc"/>
+
+    <target name="chl_max_in_5m" expression="( cumsum (((msi_ergom1_pp+msi_ergom1_ff+msi_ergom1_bb)*h)[:,70:].sum(axis=1)/h[:,70:].sum(axis=1))[3:]/3.0 -  cumsum (((msi_ergom1_pp+msi_ergom1_ff+msi_ergom1_bb)*h)[:,70:].sum(axis=1)/h[:,70:].sum(axis=1))[:-3]/3.0 ).max(axis=0)" path="result.nc"/>
+
+    <target name="chl_max_in_10m_to_150m" expression="(msi_ergom1_pp+msi_ergom1_ff+msi_ergom1_bb)[:,:58].mean(axis=0).max(axis=0)" path="result.nc"/>
+
+    <target name="timing_of_chl_max_in_5m" expression="( cumsum (((msi_ergom1_pp+msi_ergom1_ff+msi_ergom1_bb)*h)[:,70:].sum(axis=1)/h[:,70:].sum(axis=1))[3:]/3.0 -  cumsum (((msi_ergom1_pp+msi_ergom1_ff+msi_ergom1_bb)*h)[:,70:].sum(axis=1)/h[:,70:].sum(axis=1))[:-3]/3.0 ).argmax(axis=0)" path="result.nc"/>
+
+    <target name="depth_of_chl_max_in_10m_to_150m" expression="(msi_ergom1_pp+msi_ergom1_ff+msi_ergom1_bb)[:,:58].mean(axis=0).argmax(axis=0)" path="result.nc"/>
+
+  </targets>
+</config>

@@ -1,0 +1,16 @@
+#For Bast station 
+parsac sensitivity sample bats_observability.xml bats_observability_sa.pickle --dir /g100_work/tra21_seamless/ERGOM/OBSERVABILITY_1 random 100
+
+parsac sensitivity sample bats_observability_OC.xml bats_observability_OC.pickle  --dir /g100_work/tra21_seamless/ERGOM/OBSERVABILITY_OC random 100
+
+parsac sensitivity analyze bats_observability_OC.pickle cv
+
+#For Arkona Station
+
+parsac sensitivity sample arkona_sa.xml arkona_sa.pickle --dir /g100_work/tra21_seamless/ERGOM/TotalCHL_arkona random 100
+
+parsac sensitivity sample arkona_observability.xml arkona_observability_sa.pickle --dir /g100_work/tra21_seamless/ERGOM/OBSERVABILITY_1_arkona random 100
+
+parsac sensitivity sample arkona_observability_OC.xml arkona_observability_OC.pickle  --dir /g100_work/tra21_seamless/ERGOM/OBSERVABILITY_arkona_OC random 100
+
+parsac sensitivity analyze arkona_observability_OC.pickle cv

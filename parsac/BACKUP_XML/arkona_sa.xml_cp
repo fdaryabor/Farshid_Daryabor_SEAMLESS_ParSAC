@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/g100/home/usertrain/a08trb35/seamless-notebooks/extern/parsac/parsac/config.xsd">
+  <transports>
+    <transport type="sqlite" path="arkona_sa.db"/>
+  </transports>
+  <executable path="~/.local/bin/gotm" shell="True"/>
+  <setup path="../setups/arkona"/>
+  <parameters>
+    <parameter file="fabm.yaml" variable="instances/msi_ergom1/parameters/rp0" minimum="0.5" maximum="1.5" />
+    <parameter file="fabm.yaml" variable="instances/msi_ergom1/parameters/rb0" minimum="0.5" maximum="0.6" />
+    <parameter file="fabm.yaml" variable="instances/msi_ergom1/parameters/graz" minimum="0.45" maximum="0.65" />
+  </parameters>
+  <targets>
+    <target expression="(msi_ergom1_pp[:,:,:,:]+ msi_ergom1_ff[:,:,:,:]+ msi_ergom1_bb[:,:,:,:]).mean()" path="result.nc"/>
+    <target expression="(msi_ergom1_pp[:,:,:,:]+ msi_ergom1_ff[:,:,:,:]+ msi_ergom1_bb[:,:,:,:]).min()" path="result.nc"/>
+    <target expression="(msi_ergom1_pp[:,:,:,:]+ msi_ergom1_ff[:,:,:,:]+ msi_ergom1_bb[:,:,:,:]).max()" path="result.nc"/>
+  </targets>
+</config>
